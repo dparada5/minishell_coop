@@ -68,6 +68,7 @@ typedef struct s_cmds
 	int				error;
 	int				heredoc;
 	int				executor;
+	int				eof;
 	struct s_cmds	*next;
 }				t_cmds;
 
@@ -95,10 +96,11 @@ typedef struct s_minishell
 	int			flag;
 }				t_minishell;
 
-extern int	g_value;
+extern int					g_value;
 
 //-------------------------PARSER--------------------------------------
 void	init_signal(void);
+void	control_c(int signal);
 void	control_d(t_minishell *minishell);
 void	init_ev_exp(t_minishell *minishell, char **env);
 void	init_minishell(t_minishell *minishell);

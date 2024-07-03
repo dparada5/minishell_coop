@@ -51,7 +51,7 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 		close(pipe_fd[1]);
 	if (cmd->fd_in != 0)
 	{
-		ft_putendl_fd("Entra", 2);
+		// ft_putendl_fd("Entra", 2);
 		dup2(cmd->fd_in, 0);
 	}
 	else
@@ -108,6 +108,6 @@ void	ft_executor(t_minishell *mshll)
 
 	pipes = ft_pipes_count(mshll);
 	ft_bedroom(mshll, pipes);
-	ft_free_mnshell(mshll, 0);
+	// ft_free_minishell(mshll, 0);
 }
 
