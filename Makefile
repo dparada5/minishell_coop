@@ -20,7 +20,8 @@ CYAN    = \033[37;1m
 BOLD	= \033[1m
 RED		= \033[31;1m
 
-SRC_FILES = executer/built_ins/cd \
+SRC_FILES = prueba \
+			executer/built_ins/cd \
 			executer/built_ins/echo \
 			executer/built_ins/env \
 			executer/built_ins/exit \
@@ -49,7 +50,6 @@ SRC_FILES = executer/built_ins/cd \
 			parser/utils/utils \
 			parser/utils/signals \
 			parser/main
-			
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o,$(SRC_FILES)))

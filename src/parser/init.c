@@ -30,8 +30,8 @@ void	check_line(t_minishell *minishell)
 void	init_minishell(t_minishell *minishell)
 {
 	minishell->line = readline("minishell$ ");
-	// if (!minishell->line)
-	// 	control_d(minishell);
+	if (!minishell->line)
+		control_d(minishell);
 	while (minishell->line)
 	{
 		minishell->tokens = NULL;
@@ -51,8 +51,8 @@ void	init_minishell(t_minishell *minishell)
 		// ft_putnbr_fd(minishell->flag, 2);
 		ft_free_minishell(minishell, 0);
 		minishell->line = readline("minishell$ ");
-		// if (!minishell->line)
-		// 	control_d(minishell);
+		if (!minishell->line)
+			control_d(minishell);
 	}
 	rl_clear_history();
 }
