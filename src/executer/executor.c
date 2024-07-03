@@ -109,5 +109,6 @@ void	ft_executor(t_minishell *mshll)
 	pipes = ft_pipes_count(mshll);
 	ft_bedroom(mshll, pipes);
 	// ft_free_minishell(mshll, 0);
+	aaaaa
 }
 
