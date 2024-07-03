@@ -1,4 +1,4 @@
-
+	ft_free_minishell(mshll, 0);	ft_free_minishell(mshll, 0);
 #include "./../../../inc/minishell.h"
 
 int	ft_pipes_count(t_minishell *mshll)
