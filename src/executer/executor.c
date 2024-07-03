@@ -29,9 +29,17 @@ int	ft_check_for_builtins(t_minishell *mshll, t_cmds *cmd)
 	return (1);
 }
 
+// int	ft_choose_builtin_executor(t_minishell *mshll, t_cmds *cmd, pid_t pid)
+// {
+// 	if (!cmd->next && !cmd->index)
+// 		if (pid != 0)
+// 			return (ft_check_for_builtins(mshll, cmd));
+// 	else if (pid == 0)
+// 		return (ft_check_for_builtins(mshll, cmd));
+// }
 //void	ft_factory(t_minishell *mshll, )
 
-void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd)
+void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 {
 	char	*exec_path;
 
@@ -42,22 +50,19 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd)
 	if (!cmd->next)
 		close(pipe_fd[1]);
 	if (cmd->fd_in != 0)
+	{
+		ft_putendl_fd("Entra", 2);
 		dup2(cmd->fd_in, 0);
-	else if (cmd->index)
-		dup2(pipe_fd[0], 0);
+	}
+	else
+		dup2(in_fd, 0);
 	if (cmd->fd_out != 1)
 		dup2(cmd->fd_out, 1);
 	else if (cmd->next)
 		dup2(pipe_fd[1], 1);
 	exec_path = ft_get_exec_path(mshll, cmd->cmds);
 	ft_save_env_mat(mshll, -1, 0);
-	// dprintf(2, "%s\n", exec_path);
-	// write(0, "0\n", 2);
-	// write(1, "1\n", 2);
-	// write(2, "2\n", 2);
 	execve(exec_path, cmd->cmds_flags, 0);
-		// ft_putstr_fd(cmd->cmd_flag[0], 2);
-		// ft_putstr_fd("\n", 2);
 	msj_error("cmd not found\n", mshll, 2);
 	exit (0);
 }
@@ -67,12 +72,15 @@ void	ft_bedroom(t_minishell *mshll, int	pipes_left)
 	int		pipe_fd[2];
 	pid_t	pid;
 	t_cmds	*runner;
+	int		in_fd;
+
 	ft_set_cmds_index(mshll);
 	runner = mshll->cmds;
-	if (pipe(pipe_fd) == -1)
-		msj_error("pipe error\n", mshll, 1);
+	in_fd = runner->fd_in;
 	while (pipes_left >= 0)
 	{
+		if (pipe(pipe_fd) == -1)
+			msj_error("pipe error\n", mshll, 1);
 		if (ft_check_for_builtins(mshll, runner))
 			;//PORHACER comprobar si los hijos tiene que liberar la memoria de las estructuras o si eso es solo el padre
 		else
@@ -81,26 +89,25 @@ void	ft_bedroom(t_minishell *mshll, int	pipes_left)
 			if (pid == -1)
 				return ;//PORHACER añadir gestión en este caso de error
 			if (pid == 0)
-				ft_kindergarden(mshll, runner, pipe_fd);
+				ft_kindergarden(mshll, runner, pipe_fd, in_fd);
 			else
 			{
 				close(pipe_fd[1]);
-				// write(0, "0\n", 2);
-				// write(1, "1\n", 2);
-				// write(2, "2\n", 2);
 				wait(0);
 			}
 		}
 		runner = runner->next;
+		in_fd = pipe_fd[0];
 		pipes_left--;
 	}
 }
 
 void	ft_executor(t_minishell *mshll)
 {
-	int		pipes;
+	int	pipes;
 
 	pipes = ft_pipes_count(mshll);
 	ft_bedroom(mshll, pipes);
+	// ft_free_minishell(mshll, 0);
 }
 
