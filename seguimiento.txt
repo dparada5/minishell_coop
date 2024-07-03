@@ -1,0 +1,16 @@
+casos a tener en cuentaaa:
+cd ..
+PWD = /home/dparada/Desktop/minishell/src/..
+tendria que ser
+PWD = /home/dparada/Desktop/minishell
+
+ejecutor:
+que si en el comando el cmds->error = 1 no hay que ejecutar
+
+revisar todas las expanciones
+
+pa cuando termina
+echo \$~
+$~
+echo \h~
+h~
