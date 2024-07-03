@@ -88,9 +88,9 @@ clean:
 fclean:
 		@rm -rf $(OBJ_DIR)
 		@rm -rf $(NAME)
+		make fclean -C $(LIBFT)
 		@echo "$(RED)Cleaning Minishell's executables.$(RESET)"
 
-#make fclean -C $(LIBFT)
 re: fclean all
 
 .PHONY: all clean fclean re compiling 
