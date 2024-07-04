@@ -59,6 +59,10 @@ t_token	*open_infile(t_token *token, t_cmds *cmds, t_minishell *minishell)
 
 void	check_heredoc_line(char *line, t_minishell *minishell, int fd)
 {
+	if (g_value == 42)
+	{
+
+	}
 	ft_putendl_fd(expansion(line, minishell), fd);
 	free(line);
 }
@@ -75,17 +79,25 @@ t_token	*here_doc(t_token *token, t_cmds *cmds, t_minishell *minishell)
 		fd = open (".here_doc.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd < 0)
 			msj_error_fd(1, ERROR_FD, cmds, minishell);
-		while (1)
+		g_value = 51;
+		line = readline("> ");
+		// if (!line)
+		// 	control_d(minishell);
+		while (line && g_value == 51)
 		{
-			line = readline("> ");
 			if (ft_strcmp(line, token->content) == 0 || !line)
 			{
 				free(line);
 				break ;
 			}
 			check_heredoc_line(line, minishell, fd);
+			line = readline("> ");
+			if (!line)
+				break ;
 		}
 		close (fd);
+		if (g_value != 51)
+			free(line);
 		cmds->fd_in = open (".here_doc.tmp", O_RDONLY);
 		cmds->heredoc = 1;
 	}

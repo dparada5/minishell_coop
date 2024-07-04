@@ -63,7 +63,7 @@ t_env *aux_env, int *i)
 	char	*aux;
 	char	*new_string;
 
-	if (ft_strcmp(line, "~") == 0)
+	if (ft_strcmp(line, "~") == 0 && g_value != 51)
 		line = ft_strdup("$HOME");
 	else if (line[*i - 1] != '\\' && line[*i] == '~')
 	{

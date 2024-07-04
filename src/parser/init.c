@@ -2,6 +2,8 @@
 #include "./../../inc/minishell.h"
 //912
 
+int	g_value;
+
 void	init_ev_exp(t_minishell *minishell, char **env)
 {
 	if (env != NULL)
@@ -29,30 +31,32 @@ void	check_line(t_minishell *minishell)
 
 void	init_minishell(t_minishell *minishell)
 {
+	g_value = 1;
 	minishell->line = readline("minishell$ ");
 	if (!minishell->line)
 		control_d(minishell);
 	while (minishell->line)
 	{
-		minishell->tokens = NULL;
-		minishell->cmds = NULL;
 		if (!ft_strlen(minishell->line))
 		{
 			minishell->line = readline("minishell$ ");
+			if (!minishell->line)
+				control_d(minishell);
 			continue ;
 		}
 		add_history(minishell->line);
 		check_line(minishell);
-		if (minishell->flag != 1)
+		if (minishell->flag != 1 && g_value != 42)
 		{
+			g_value = 2;
 			ft_executor(minishell);
 			minishell->val_error = 0;
 		}
-		// ft_putnbr_fd(minishell->flag, 2);
 		ft_free_minishell(minishell, 0);
+		g_value = 1;
 		minishell->line = readline("minishell$ ");
-		if (!minishell->line)
-			control_d(minishell);
+		// if (!minishell->line)
+		// 	control_d(minishell);
 	}
 	rl_clear_history();
 }

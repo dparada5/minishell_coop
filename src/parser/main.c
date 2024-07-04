@@ -13,6 +13,8 @@ int	main(int argc, char **argv, char **env)
 		if (!minishell)
 			msj_error(MALLOC_FAILED, minishell, 0);
 		init_ev_exp(minishell, env);
+		minishell->tokens = NULL;
+		minishell->cmds = NULL;
 		init_signal();
 		init_minishell(minishell);
 	}
