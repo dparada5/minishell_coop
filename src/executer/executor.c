@@ -62,6 +62,8 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 	int		pipe_fd[2];
 	pid_t	pid;
 
+	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
+		exit (0);//PORHACER comprobar si los hijos tiene que liberar la memoria de las estructuras o si eso es solo el padre
 	if (fd_in != 0)
 		dup2(cmd->fd_in, 0);
 	if (cmd->fd_out != 1)
