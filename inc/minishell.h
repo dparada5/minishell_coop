@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 # include <signal.h>
+# include <errno.h>
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED    "\033[1;31m"   /* Bold Red */
@@ -25,6 +26,7 @@
 # define ERROR_SQ	"unexpected EOF while looking for matching quote '''\n"
 # define ERROR_DQ	"unexpected EOF while looking for matching quote '\"'\n"
 # define MALLOC_FAILED "malloc failed.\n"
+# define CONTROL_D_HD	""
 
 
 typedef enum e_state_num
@@ -142,8 +144,10 @@ t_env	*save_env(char **env, int i, t_minishell *minishell);
 t_env	**ft_lstadd_back_env(t_env **lst, t_env *new);
 //------------------utils------------------------------------
 void	msj_error(char *str, t_minishell *minishell, int val_error);
+void	msj_error_fd(int val, char *str, t_cmds *cmds, t_minishell *minishell);
 //------------------memory free------------------------------
 void	ft_lstclear_token(t_token *lst);
+void	ft_lstclear_env(t_env *lst);
 void	ft_free_minishell(t_minishell *minishell, int bool);
 //------------------prints------------------------------------
 void	printf_tokens(t_token *token);
@@ -175,9 +179,12 @@ void	ft_free_mat(char **mat);
 int		ft_cd(t_minishell *minishell, t_env *env, int error_check);
 void	ft_echo(t_cmds *cmd);
 void	ft_env(t_env *env);
-void	ft_exit(int error_code, t_minishell *minishell);
+void	ft_exit(int error_code, t_minishell *minishell, t_cmds *cmd);
 void	ft_export_print(t_env **exp, t_env *prev_node, t_env *swap_aux, t_env *run);
 void	ft_export_insert(t_minishell *mshll, char *str);
 void	ft_pwd(void);
 void	ft_unset(t_minishell *mshll, char *key_to_delete);
+
+int ft_is_num(char *str);
+int	ft_wait(void);
 #endif

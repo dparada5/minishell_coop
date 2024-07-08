@@ -30,7 +30,7 @@ void	ft_lstclear_cmds(t_cmds *lst)
 			close(aux->fd_in);
 		if (aux->fd_out != 1)
 			close(aux->fd_out);
-		if (aux->heredoc == 1)
+		if (access(".here_doc.tmp", F_OK) == 0)
 			unlink(".here_doc.tmp");
 		aux->cmds = NULL;
 		if (aux->cmds_flags)
@@ -101,7 +101,6 @@ void	ft_free_minishell(t_minishell *minishell, int bool)
 					ft_lstclear_env(minishell->exp);
 			}
 		}
-		g_value = 1;
 		if (bool == 1)
 			free(minishell);
 	}
