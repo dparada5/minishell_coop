@@ -44,6 +44,20 @@ void	ft_export_print(t_env **exp, t_env *prev_node, t_env *swap_aux, t_env *run)
 	ft_print_exp(*exp);
 }
 
+void	ft_check_and_replace(t_minishell *mshll, char *key, char *content)
+{
+	if (!ft_get_envvar(mshll->exp, key))
+	{
+		ft_lstadd_back_env(&(mshll->exp), new_env_exp(key, content));
+		ft_lstadd_back_env(&(mshll->env), new_env_exp(key, content));
+	}
+	else
+	{
+		ft_change_envvar(mshll->env, key, content);
+		ft_change_envvar(mshll->exp, key, content);
+	}
+}
+
 void	ft_export_insert(t_minishell *mshll, char *str)
 {
 	char	*key;
@@ -52,15 +66,17 @@ void	ft_export_insert(t_minishell *mshll, char *str)
 
 	i = 0;
 	if (ft_strchr(str, '=') == NULL)
-		ft_lstadd_back_env(&(mshll->exp), new_env_exp(str, NULL));
+	{
+		if (!ft_get_envvar(mshll->exp, str))
+			ft_lstadd_back_env(&(mshll->exp), new_env_exp(str, NULL));
+	}
 	else
 	{
 		while (str[i] != '=')
 			i++;
 		key = ft_substr(str, 0, i);
 		content = ft_substr(str, i + 1, ft_strlen(str) - (i + 1));
-		ft_lstadd_back_env(&(mshll->exp), new_env_exp(key, content));
-		ft_lstadd_back_env(&(mshll->env), new_env_exp(key, content));
+		ft_check_and_replace(mshll, key, content);
 		ft_save_env_mat(mshll, -1, 0);
 		free(key);
 		free(content);
