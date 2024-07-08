@@ -30,7 +30,7 @@ void	ft_lstclear_cmds(t_cmds *lst)
 			close(aux->fd_in);
 		if (aux->fd_out != 1)
 			close(aux->fd_out);
-		if (aux->heredoc == 1)
+		if (access(".here_doc.tmp", F_OK) == 0)
 			unlink(".here_doc.tmp");
 		aux->cmds = NULL;
 		if (aux->cmds_flags)
@@ -51,7 +51,8 @@ void	ft_lstclear_token(t_token *lst)
 	{
 		aux = lst;
 		lst = lst->next;
-		free(aux->content);
+		if (aux->content)
+			free(aux->content);
 		aux->content = NULL;
 		free(aux);
 		aux = NULL;
@@ -78,24 +79,29 @@ void	ft_lstclear_env(t_env *lst)
 
 void	ft_free_minishell(t_minishell *minishell, int bool)
 {
-	if (minishell->tokens || minishell->cmds || minishell->env)
+	if (minishell)
 	{
-		if (minishell->tokens != NULL)
-			ft_lstclear_token(minishell->tokens);
-		if (minishell->cmds != NULL)
-			ft_lstclear_cmds(minishell->cmds);
-		if (minishell->line)
-			free(minishell->line);
-		minishell->line = NULL;
-		minishell->flag = 0;
-		if (bool == 1)
+		if (minishell->tokens || minishell->cmds || minishell->env)
 		{
-			if (minishell->env)
-				ft_lstclear_env(minishell->env);
-			if (minishell->exp)
-				ft_lstclear_env(minishell->exp);
+			if (minishell->tokens != NULL)
+				ft_lstclear_token(minishell->tokens);
+			if (minishell->cmds != NULL)
+				ft_lstclear_cmds(minishell->cmds);
+			if (minishell->line)
+				free(minishell->line);
+			minishell->tokens = NULL;
+			minishell->cmds = NULL;
+			minishell->line = NULL;
+			minishell->flag = 0;
+			if (bool == 1)
+			{
+				if (minishell->env)
+					ft_lstclear_env(minishell->env);
+				if (minishell->exp)
+					ft_lstclear_env(minishell->exp);
+			}
 		}
+		if (bool == 1)
+			free(minishell);
 	}
-	if (bool == 1)
-		free(minishell);
 }

@@ -3,10 +3,19 @@
 
 void	msj_error(char *str, t_minishell *minishell, int val_error)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(str, 2);
+	if (errno)
+	{
+		perror(str);
+		minishell->val_error = WEXITSTATUS(errno);
+		// del estado del waitpid (hay que hacerlo si o si)
+	}
+	else
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(str, 2);
+		minishell->val_error = val_error;
+	}
 	minishell->flag = 1;
-	minishell->val_error = val_error;
 }
 
 int	is_join(t_token *tokens)

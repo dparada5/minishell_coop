@@ -53,4 +53,3 @@ char	**cmds(t_token *tokens, int len, t_minishell *minishell)
 	matrix[i] = NULL;
 	return (matrix);
 }
-
