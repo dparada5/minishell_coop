@@ -57,6 +57,11 @@ void	token_next(t_token *token, t_minishell *minishell)
 	int		flag;
 
 	flag = 0;
+	if (!token)
+	{
+		minishell->flag = 1;
+		return ;
+	}
 	aux = token;
 	while (aux)
 	{

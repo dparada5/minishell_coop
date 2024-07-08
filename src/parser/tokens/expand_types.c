@@ -23,6 +23,7 @@ char	*is_not_expandable(char *line, int *i)
 	}
 	aux[l] = '\0';
 	*i = j;
+	free(line);
 	return (aux);
 }
 
@@ -45,6 +46,7 @@ char	*does_not_exist(char *line, char *var, int *i)
 		aux[l++] = line[j++];
 	aux[l] = '\0';
 	*i -= 1;
+	// free(line);
 	return (aux);
 }
 
@@ -70,5 +72,7 @@ char	*expand(char *line, t_env *aux_env, int *i, int l)
 	while (line[++j])
 		new_string[l++] = line[j];
 	new_string[l] = '\0';
+	ft_lstclear_env(aux_env);
+	// free(line);
 	return (new_string);
 }

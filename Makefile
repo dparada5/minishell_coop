@@ -20,8 +20,7 @@ CYAN    = \033[37;1m
 BOLD	= \033[1m
 RED		= \033[31;1m
 
-SRC_FILES = prueba \
-			executer/built_ins/cd \
+SRC_FILES = executer/built_ins/cd \
 			executer/built_ins/echo \
 			executer/built_ins/env \
 			executer/built_ins/exit \
@@ -36,6 +35,8 @@ SRC_FILES = prueba \
 			parser/commands/cmds_create \
 			parser/commands/cmds_utils \
 			parser/commands/create_cmd_matrix \
+			parser/commands/redirecc \
+			parser/commands/here_doc \
 			parser/tokens/create_token \
 			parser/utils/env \
 			parser/tokens/expand_types \
@@ -43,7 +44,6 @@ SRC_FILES = prueba \
 			parser/utils/free \
 			parser/init \
 			parser/utils/prints \
-			parser/commands/redirecc \
 			parser/utils/states \
 			parser/tokens/token_utils \
 			parser/tokens/tokens \
