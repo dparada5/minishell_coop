@@ -9,6 +9,8 @@ char	*ft_get_exec_path(t_minishell *mshll, char *cmd)
 	char	*exec_line;
 	char	*join_aux;
 
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (cmd);
 	path_var = ft_get_envvar(mshll->env, "PATH");
 	path_splitted = ft_split(path_var->content, ':');
 	i = -1;
