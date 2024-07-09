@@ -123,4 +123,5 @@ void	ft_executor(t_minishell *mshll)
 	else
 		ft_bedroom(mshll, pipes + 1, in_fd);
 }
+//toma un puto cambio
 
