@@ -34,7 +34,7 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 	char	*exec_path;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		exit (0);//PORHACER comprobar si los hijos tiene que liberar la memoria de las estructuras o si eso es solo el padre
+		ft_free_and_exit(mshll, 127, "command not found\n");
 	if (!cmd->index)
 		close(pipe_fd[0]);
 	if (!cmd->next)
@@ -48,13 +48,11 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 	else if (cmd->next)
 		dup2(pipe_fd[1], 1);
 	if (ft_check_for_builtins(mshll, cmd))
-		exit (0);//PORHACER añadir una función para llamar de forma general que se encargue de liberar memoria y hacer exit de los procesos hijos
+		ft_free_and_exit(mshll, 0, NULL);
 	exec_path = ft_get_exec_path(mshll, cmd->cmds);
 	ft_save_env_mat(mshll, -1, 0);
 	execve(exec_path, cmd->cmds_flags, 0);
-	msj_error("cmd not found\n", mshll, 2);
-	ft_free_minishell(mshll, 0);
-	exit (0);
+	ft_free_and_exit(mshll, 127, "command not found");
 }
 
 void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
@@ -63,7 +61,7 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 	pid_t	pid;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		return ;//PORHACER comprobar si los hijos tiene que liberar la memoria de las estructuras o si eso es solo el padre
+		return(ft_free_and_exit(mshll, 127, "command not found"));
 	if (fd_in != 0)
 		dup2(cmd->fd_in, 0);
 	if (cmd->fd_out != 1)
@@ -74,7 +72,7 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 				msj_error("pipe error\n", mshll, 1);
 			pid = fork();
 			if (pid == -1)
-				return ;//PORHACER añadir gestión en este caso de error
+				return (msj_error("Error ar fork() function.", mshll, 2));
 			if (pid == 0)
 				ft_kindergarden(mshll, cmd, pipe_fd, fd_in);
 			else
@@ -116,6 +114,7 @@ void	ft_executor(t_minishell *mshll)
 	int		pipes;
 	int		in_fd;
 
+	g_value = 2;
 	pipes = ft_pipes_count(mshll);
 	ft_set_cmds_index(mshll);
 	in_fd = mshll->cmds->fd_in;
