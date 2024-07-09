@@ -62,24 +62,27 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
 		return(ft_free_and_exit(mshll, 127, "command not found"));
-	if (fd_in != 0)
-		dup2(cmd->fd_in, 0);
-	if (cmd->fd_out != 1)
-		dup2(cmd->fd_out, 1);
+	if (ft_check_for_builtins_cmp(cmd))
+	{
+		if (fd_in != 0)
+			dup2(cmd->fd_in, 0);
+		if (cmd->fd_out != 1)
+			dup2(cmd->fd_out, 1);
+	}
 	if (!ft_check_for_builtins(mshll, cmd))
 	{
 		if (pipe(pipe_fd) == -1)
-				msj_error("pipe error\n", mshll, 1);
-			pid = fork();
-			if (pid == -1)
-				return (msj_error("Error ar fork() function.", mshll, 2));
-			if (pid == 0)
-				ft_kindergarden(mshll, cmd, pipe_fd, fd_in);
-			else
-			{
-				close(pipe_fd[1]);
-				mshll->val_error = ft_wait();
-			}
+			msj_error("pipe error\n", mshll, 1);
+		pid = fork();
+		if (pid == -1)
+			return (msj_error("Error ar fork() function.", mshll, 2));
+		if (pid == 0)
+			ft_kindergarden(mshll, cmd, pipe_fd, fd_in);
+		else
+		{
+			close(pipe_fd[1]);
+			mshll->val_error = ft_wait();
+		}
 	}
 }
 
@@ -96,7 +99,7 @@ void	ft_bedroom(t_minishell *mshll, int	pipes_left, int in_fd)
 			msj_error("pipe error\n", mshll, 1);
 		pid = fork();
 		if (pid == -1)
-			return ;//PORHACER añadir gestión en este caso de error
+			return (msj_error("Error ar fork() function.", mshll, 2));
 		if (pid == 0)
 			ft_kindergarden(mshll, runner, pipe_fd, in_fd);
 		else
