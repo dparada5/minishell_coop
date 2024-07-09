@@ -63,13 +63,8 @@ t_env *aux_env, int *i)
 	char	*aux;
 	char	*new_string;
 
-	if (ft_strcmp(line, "~") == 0 && g_value != 51)
-		line = ft_strdup("$HOME");
-	else if (line[*i - 1] != '\\' && line[*i] == '~')
-	{
-		(*i)++;
-		return (line);
-	}
+	if (line[*i - 1] != '\\' && line[*i] == '~')
+		return ((*i)++, line);
 	aux = get_var(line, i, *i, minishell);
 	aux_env = ft_get_envvar(minishell->env, aux);
 	if (line[(*i) - 1] == '\\')
@@ -84,6 +79,8 @@ t_env *aux_env, int *i)
 		new_string = expand(line, aux_env, i, 0);
 	if (!new_string && minishell->flag != 1)
 		msj_error(MALLOC_FAILED, minishell, 0);
+	free(line);
+	free(aux);
 	return (new_string);
 }
 
@@ -94,6 +91,11 @@ char	*expansion(char *line, t_minishell *minishell)
 	if (minishell->flag != 1)
 	{
 		i = 0;
+		if (ft_strcmp(line, "~") == 0)
+		{
+			free(line);
+			line = ft_strdup("$HOME");
+		}
 		while (line[i])
 		{
 			if (line[i] == '~' || line[i] == '$')

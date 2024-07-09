@@ -96,7 +96,7 @@ void	ft_bedroom(t_minishell *mshll, int	pipes_left, int in_fd)
 			msj_error("pipe error\n", mshll, 1);
 		pid = fork();
 		if (pid == -1)
-			return ;//PORHACER añadir gestión en este caso de error
+			return (msj_error("Error ar fork() function.", mshll, 2));
 		if (pid == 0)
 			ft_kindergarden(mshll, runner, pipe_fd, in_fd);
 		else
@@ -113,8 +113,12 @@ void	ft_executor(t_minishell *mshll)
 {
 	int		pipes;
 	int		in_fd;
+	int		stin;
+	int		stout;
 
 	g_value = 2;
+	stin = dup(STDIN_FILENO);
+	stout = dup (STDOUT_FILENO);
 	pipes = ft_pipes_count(mshll);
 	ft_set_cmds_index(mshll);
 	in_fd = mshll->cmds->fd_in;
@@ -122,6 +126,8 @@ void	ft_executor(t_minishell *mshll)
 		ft_single_cmd(mshll, mshll->cmds, in_fd);
 	else
 		ft_bedroom(mshll, pipes + 1, in_fd);
+	dup2(stin, STDIN_FILENO);
+	dup2(stout, STDOUT_FILENO);
 }
 //toma un puto cambio
 

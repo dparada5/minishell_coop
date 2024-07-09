@@ -45,8 +45,9 @@ void	init_minishell(t_minishell *minishell)
 		if (minishell->flag != 1)
 		{
 			g_value = 2;
+			
 			ft_executor(minishell);
-			minishell->val_error = 0;
+			// minishell->val_error = 0;
 		}
 		ft_free_minishell(minishell, 0);
 		g_value = 1;
