@@ -1,32 +1,6 @@
 
 #include "./../../../inc/minishell.h"
 
-int	ft_check_for_builtins_cmp(t_cmds *cmd)
-{
-	char	**cmds_flags;
-	int		len;
-
-	cmds_flags = cmd->cmds_flags;
-	len = ft_strlen(cmds_flags[0]);
-	if (ft_strncmp(cmds_flags[0], "cd", len) == 0)
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "echo", len) == 0)
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "env", len) == 0)
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "exit", len) == 0)
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "export", len) == 0 && !cmds_flags[1])
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "export", len) == 0 && cmds_flags[1])
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "pwd", len) == 0)
-		return (1);
-	else if (ft_strncmp(cmds_flags[0], "unset", len) == 0)
-		return (1);
-	return (0);
-}
-
 void	ft_free_mat(char **mat)
 {
 	int	i;
