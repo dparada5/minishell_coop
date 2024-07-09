@@ -20,10 +20,6 @@ int	ft_change_envvar(t_env *env, char *var_name, char *new_value)
 	t_env	*aux;
 
 	aux = ft_get_envvar(env, var_name);
-	// ft_putstr_fd(var_name, 2);
-	// ft_putstr_fd("\n", 2);
-	// ft_putstr_fd(new_value, 2);
-	// ft_putstr_fd("\n", 2);
 	if (!aux)
 		return (0);//PORHACER otra vez lo de la mierda de control de errores
 	free (aux->content);
@@ -50,6 +46,7 @@ t_env	*new_env_exp(char *key, char *content)
 		env->content = ft_strdup(content);
 	if ((!env->content && content) || !env->key)
 		return (NULL);
+	env->equal = 0;
 	env->next = NULL;
 	return (env);
 }
