@@ -12,13 +12,14 @@ char	*ft_get_exec_path(t_minishell *mshll, char *cmd)
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
 	path_var = ft_get_envvar(mshll->env, "PATH");
+	if (!path_var)
+		msj_error("No path found", mshll, 130);
 	path_splitted = ft_split(path_var->content, ':');
 	i = -1;
 	while (path_splitted[++i])
 	{
 		join_aux = ft_strjoin(path_splitted[i], "/");
 		exec_line = ft_strjoin(join_aux, cmd);
-		// free(join_aux);
 		join_aux = NULL;
 		if (access(exec_line, F_OK | X_OK) == 0)
 			return (exec_line);

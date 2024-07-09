@@ -83,6 +83,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*content;
+	int				equal;
 	struct s_env	*next;
 }				t_env;
 
@@ -187,4 +188,5 @@ void	ft_unset(t_minishell *mshll, char *key_to_delete);
 
 int ft_is_num(char *str);
 int	ft_wait(void);
+void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg);
 #endif
