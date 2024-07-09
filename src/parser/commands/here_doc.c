@@ -46,8 +46,8 @@ void	here_doc_wait(t_token *token, t_cmds *cmds, t_minishell *mini, int fd)
 		mini->flag = 1;
 	else if (WEXITSTATUS(status) == 0)
 	{
-		ft_putstr_fd("minishell: warning: here_document \
-		delimited by end-of-file (wanted '", 1);
+		ft_putstr_fd("minishell: warning: ", 1);
+		ft_putstr_fd("here_document delimited by end-of-file (wanted '", 1);
 		ft_putstr_fd(token->content, 1);
 		ft_putendl_fd("')", 1);
 	}
