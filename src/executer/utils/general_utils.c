@@ -39,3 +39,11 @@ int ft_wait(void)
         out_status = 0;
     return (out_status);
 }
+
+void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg)
+{
+	ft_free_minishell(mshll, 1);
+	if (exit_value)
+		msj_error(error_msg, mshll, exit_value);
+	exit (exit_value);
+}

@@ -7,7 +7,6 @@ void	msj_error(char *str, t_minishell *minishell, int val_error)
 	{
 		perror(str);
 		minishell->val_error = WEXITSTATUS(errno);
-		// del estado del waitpid (hay que hacerlo si o si)
 	}
 	else
 	{
