@@ -71,10 +71,17 @@ void	ft_check_and_replace(t_minishell *mshll, char *key, char *content)
 
 int	ft_check_first_digit(char *str, t_minishell *mshll)
 {
-	if (!ft_isdigit(str[0]))
+	char	*key;
+	int		i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	key = ft_substr(str, 0, i);
+	if (!ft_export_chars(key, mshll))
 	{
 		ft_putstr_fd("minishell: export: '", 2);
-		ft_putstr_fd(str, 2);
+		ft_putstr_fd(key, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		mshll->val_error = 1;
 		mshll->flag = 1;
