@@ -19,7 +19,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-# define ERROR_FD	"No such file or directory.\n"
+# define ERROR_FD	"No such file or directory."
 # define ERROR_EOF 	"syntax error: unexpected end of file\n"
 # define ERROR_UPIPE	"syntax error near unexpected token '|'\n"
 # define ERROR_UT	"syntax error near unexpected token\n"
@@ -189,8 +189,11 @@ void	ft_export_insert(t_minishell *mshll, char *str, t_env *aux, int i);
 void	ft_pwd(void);
 void	ft_unset(t_minishell *mshll, char *key_to_delete);
 
-int ft_is_num(char *str);
-int	ft_wait(void);
-int	ft_export_chars(char *str, t_minishell *mshll);
+int		ft_is_num(char *str);
+int		ft_wait(void);
+int		ft_export_chars(char *str, t_minishell *mshll);
 void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg, int exit_b);
+int		ft_cd_norm(t_minishell *mshll, char *absol_path);
+void	ft_check_invalid_export(t_minishell *mshll, t_cmds *cmd, int insert);
+
 #endif
