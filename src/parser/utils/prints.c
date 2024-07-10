@@ -10,7 +10,7 @@ void	printf_cmds(t_cmds *cmds)
 	while (aux)
 	{
 		i = 0;
-		printf("Command: %s %d %d\n", aux->cmds, aux->fd_in, aux->fd_out);
+		printf("Command: %s %d\n", aux->cmds, aux->empty_flag);
 		while (aux->cmds_flags[i])
 		{
 			printf("\tFlags: %s\n", aux->cmds_flags[i]);

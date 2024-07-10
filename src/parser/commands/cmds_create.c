@@ -52,6 +52,8 @@ t_token	*command_create(t_token *token, t_minishell *minishell)
 	{
 		if (aux->token >= T_G && aux->token <= T_DL)
 			aux = aux->next;
+		else if (ft_strlen(aux->content) == 0)
+			minishell->cmd_empty = 1;
 		else if (ft_strlen(aux->content) > 0)
 			break ;
 		aux = aux->next;
@@ -60,6 +62,7 @@ t_token	*command_create(t_token *token, t_minishell *minishell)
 		aux = command_words(token, 0, minishell, token);
 	else if (aux)
 		aux = command_words(aux, 1, minishell, token);
+	minishell->cmd_empty = 0;
 	return (aux);
 }
 
