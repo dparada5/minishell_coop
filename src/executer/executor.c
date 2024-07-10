@@ -34,7 +34,7 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 	char	*exec_path;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		ft_free_and_exit(mshll, 127, "command not found\n", 1);
+		ft_free_and_exit(mshll, 127, NULL, 1);
 	if (!cmd->index)
 		close(pipe_fd[0]);
 	if (!cmd->next)
@@ -61,7 +61,7 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 	pid_t	pid;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		return(ft_free_and_exit(mshll, 127, "command not found", 0));
+		return(ft_free_and_exit(mshll, 127, NULL, 0));
 	if (fd_in != 0)
 		dup2(cmd->fd_in, 0);
 	if (cmd->fd_out != 1)

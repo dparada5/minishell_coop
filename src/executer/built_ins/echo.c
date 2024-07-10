@@ -10,7 +10,9 @@ void	ft_echo(t_cmds *cmd)
 	if (!ft_strncmp(cmd->cmds_flags[1], "-n", 3))
 	{
 		nnl_flag = 1;
-		i = 2;
+		i++;
+		while (!ft_strncmp(cmd->cmds_flags[i], "-n", 3))
+			i++;
 	}
 	while (cmd->cmds_flags[i])
 	{
