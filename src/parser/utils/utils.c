@@ -10,8 +10,11 @@ void	msj_error(char *str, t_minishell *minishell, int val_error)
 	}
 	else
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(str, 2);
+		if (str)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(str, 2);
+		}
 		minishell->val_error = val_error;
 	}
 	minishell->flag = 1;
