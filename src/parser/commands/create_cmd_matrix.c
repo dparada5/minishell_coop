@@ -44,10 +44,10 @@ char	**cmds(t_token *tokens, int len, t_minishell *minishell)
 	{
 		if (aux->token >= T_G && aux->token <= T_DL)
 			aux = aux->next;
+		else if (ft_strlen(aux->content) == 0)
+			minishell->cmd_empty = 1;
 		else if (ft_strlen(aux->content) != 0)
-		{
 			matrix[i++] = check_join(aux);
-		}
 		aux = aux->next;
 	}
 	matrix[i] = NULL;

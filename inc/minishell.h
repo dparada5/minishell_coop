@@ -191,5 +191,6 @@ void	ft_unset(t_minishell *mshll, char *key_to_delete);
 
 int ft_is_num(char *str);
 int	ft_wait(void);
+int	ft_export_chars(char *str, t_minishell *mshll);
 void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg, int exit_b);
 #endif
