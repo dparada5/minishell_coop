@@ -71,6 +71,7 @@ typedef struct s_cmds
 	int				heredoc;
 	int				executor;
 	int				eof;
+	int				empty_flag;
 	struct s_cmds	*next;
 }				t_cmds;
 
@@ -96,6 +97,7 @@ typedef struct s_minishell
 	char		**env_mat;
 	char		*line;
 	int			val_error;
+	int			cmd_empty;
 	int			flag;
 }				t_minishell;
 

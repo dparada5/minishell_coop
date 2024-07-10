@@ -28,13 +28,14 @@ void	check_line(t_minishell *minishell)
 	// printf_tokens(minishell->tokens);
 	check_expansion(minishell->tokens, minishell);
 	token_actions(minishell);
-	// printf_cmds(minishell->cmds);
+	printf_cmds(minishell->cmds);
 }
 
 void	init_minishell(t_minishell *minishell)
 {
 	while (minishell->line)
 	{
+		minishell->cmd_empty = 0;
 		if (!ft_strlen(minishell->line))
 		{
 			minishell->line = readline("minishell$ ");
@@ -47,7 +48,7 @@ void	init_minishell(t_minishell *minishell)
 		if (minishell->flag != 1)
 		{
 			signal(SIGQUIT, control_backslash);
-			ft_executor(minishell);
+			// ft_executor(minishell);
 		}
 		ft_free_minishell(minishell, 0);
 		g_value = 1;
