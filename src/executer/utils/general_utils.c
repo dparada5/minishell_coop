@@ -48,3 +48,24 @@ void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg, int e
 	if (exit_b)
 		exit (exit_value);
 }
+
+int	ft_export_chars(char *str, t_minishell *mshll)
+{
+	int i;
+	
+	(void)mshll;
+	// if (mshll->cmds->flag)
+	// {
+	// 	// msj_error("export: '': not a valid identifier", mshll, 1);
+	// 	return (0);
+	// }
+	if (!ft_isdigit(str[0]))
+		return (0);
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+	}
+	return (1);
+}
