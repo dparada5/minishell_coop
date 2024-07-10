@@ -54,11 +54,6 @@ int	ft_export_chars(char *str, t_minishell *mshll)
 	int i;
 	
 	(void)mshll;
-	// if (mshll->cmds->flag)
-	// {
-	// 	// msj_error("export: '': not a valid identifier", mshll, 1);
-	// 	return (0);
-	// }
 	if (!ft_isdigit(str[0]))
 		return (0);
 	i = -1;
