@@ -73,7 +73,6 @@ void	ft_save_env_mat(t_minishell *mshll, int i, int size)
 		aux = ft_strdup(env_runner->key);
 		join_aux = ft_strjoin(aux, "=");
 		mshll->env_mat[i] = ft_strjoin(join_aux, env_runner->content);
-		// free (join_aux);
 		env_runner = env_runner->next;
 	}
 }
