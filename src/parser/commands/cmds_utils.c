@@ -47,6 +47,7 @@ t_cmds	*new_cmd(int i, char **matrix, t_token *tokens, t_minishell *minishell)
 	cmds->fd_out = STDOUT_FILENO;
 	file_descriptor(cmds, tokens, minishell);
 	cmds->next = NULL;
+	cmds->empty_flag = minishell->cmd_empty;
 	return (cmds);
 }
 
