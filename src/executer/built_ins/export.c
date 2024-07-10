@@ -69,30 +69,45 @@ void	ft_check_and_replace(t_minishell *mshll, char *key, char *content)
 	}
 }
 
-void	ft_export_insert(t_minishell *mshll, char *str)
+int	ft_check_first_digit(char *str, t_minishell *mshll)
+{
+	if (!ft_isdigit(str[0]))
+	{
+		ft_putstr_fd("minishell: export: '", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		mshll->val_error = 1;
+		mshll->flag = 1;
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_export_insert(t_minishell *mshll, char *str, t_env *aux, int i)
 {
 	char	*key;
 	char	*content;
-	int		i;
-	t_env	*aux;
 
-	aux = NULL;
-	i = 0;
-	if (ft_strchr(str, '=') == NULL)
+	if (!ft_check_first_digit(str, mshll))
 	{
-		if (!ft_get_envvar(mshll->exp, str))
-			ft_lstadd_back_env(&(mshll->exp), new_env_exp(str, NULL));
-		aux = ft_get_envvar(mshll->exp, str);
-		aux->equal = 1;
-	}
-	else
-	{
-		while (str[i] != '=')
-			i++;
-		key = ft_substr(str, 0, i);
-		content = ft_substr(str, i + 1, ft_strlen(str) - (i + 1));
-		ft_check_and_replace(mshll, key, content);
-		free(key);
-		free(content);
+		if (ft_strchr(str, '=') == NULL)
+		{
+			if (!ft_get_envvar(mshll->exp, str))
+			{
+				ft_lstadd_back_env(&(mshll->exp), new_env_exp(str, NULL));
+				aux = ft_get_envvar(mshll->exp, str);
+				aux->equal = 1;
+			}
+		}
+		else
+		{
+			while (str[i] != '=')
+				i++;
+			key = ft_substr(str, 0, i);
+			content = ft_substr(str, i + 1, ft_strlen(str) - (i + 1));
+			ft_check_and_replace(mshll, key, content);
+			free(key);
+			free(content);
+		}
 	}
 }

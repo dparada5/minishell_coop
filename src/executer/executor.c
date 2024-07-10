@@ -19,7 +19,7 @@ int	ft_check_for_builtins(t_minishell *mshll, t_cmds *cmd)
 	else if (ft_strncmp(cmds_flags[0], "export", len) == 0 && !cmds_flags[1])
 		ft_export_print(&mshll->exp, NULL, NULL, NULL);
 	else if (ft_strncmp(cmds_flags[0], "export", len) == 0 && cmds_flags[1])
-		ft_export_insert(mshll, cmds_flags[1]);
+		ft_export_insert(mshll, cmds_flags[1], NULL, 0);
 	else if (ft_strncmp(cmds_flags[0], "pwd", len) == 0)
 		ft_pwd();
 	else if (ft_strncmp(cmds_flags[0], "unset", len) == 0)
@@ -34,7 +34,7 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 	char	*exec_path;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		ft_free_and_exit(mshll, 127, "command not found\n");
+		ft_free_and_exit(mshll, 127, "command not found\n", 1);
 	if (!cmd->index)
 		close(pipe_fd[0]);
 	if (!cmd->next)
@@ -48,11 +48,11 @@ void	ft_kindergarden(t_minishell *mshll, t_cmds *cmd, int *pipe_fd, int in_fd)
 	else if (cmd->next)
 		dup2(pipe_fd[1], 1);
 	if (ft_check_for_builtins(mshll, cmd))
-		ft_free_and_exit(mshll, 0, NULL);
+		ft_free_and_exit(mshll, 0, NULL, 1);
 	exec_path = ft_get_exec_path(mshll, cmd->cmds);
 	ft_save_env_mat(mshll, -1, 0);
 	execve(exec_path, cmd->cmds_flags, 0);
-	ft_free_and_exit(mshll, 127, "command not found");
+	ft_free_and_exit(mshll, 127, "command not found", 1);
 }
 
 void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
@@ -61,7 +61,7 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 	pid_t	pid;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		return(ft_free_and_exit(mshll, 127, "command not found"));
+		return(ft_free_and_exit(mshll, 127, "command not found", 0));
 	if (fd_in != 0)
 		dup2(cmd->fd_in, 0);
 	if (cmd->fd_out != 1)
