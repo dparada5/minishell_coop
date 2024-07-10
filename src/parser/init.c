@@ -45,9 +45,13 @@ void	init_minishell(t_minishell *minishell)
 		add_history(minishell->line);
 		check_line(minishell);
 		if (minishell->flag != 1)
+		{
+			signal(SIGQUIT, control_backslash);
 			ft_executor(minishell);
+		}
 		ft_free_minishell(minishell, 0);
 		g_value = 1;
+		signal(SIGQUIT, SIG_IGN);
 		minishell->line = readline("minishell$ ");
 	}
 	rl_clear_history();
