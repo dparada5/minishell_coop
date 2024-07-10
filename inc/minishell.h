@@ -183,11 +183,11 @@ void	ft_echo(t_cmds *cmd);
 void	ft_env(t_env *env);
 void	ft_exit(int error_code, t_minishell *minishell, t_cmds *cmd);
 void	ft_export_print(t_env **exp, t_env *prev_node, t_env *swap_aux, t_env *run);
-void	ft_export_insert(t_minishell *mshll, char *str);
+void	ft_export_insert(t_minishell *mshll, char *str, t_env *aux, int i);
 void	ft_pwd(void);
 void	ft_unset(t_minishell *mshll, char *key_to_delete);
 
 int ft_is_num(char *str);
 int	ft_wait(void);
-void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg);
+void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg, int exit_b);
 #endif

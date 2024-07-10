@@ -30,15 +30,11 @@ void	control_backslash(int signal)
 	(void)signal;
 	if (g_value == 2)
 		ft_putendl_fd("Quit (core dumped)", 2);
-	// else
-	// 	return ;
 }
 
 void	init_signal(void)
 {
 	signal(SIGINT, control_c);
-	// if (g_value == 2)
-	// else
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 }
