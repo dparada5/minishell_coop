@@ -69,17 +69,17 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 	if (!ft_check_for_builtins(mshll, cmd))
 	{
 		if (pipe(pipe_fd) == -1)
-				msj_error("pipe error\n", mshll, 1);
-			pid = fork();
-			if (pid == -1)
-				return (msj_error("Error ar fork() function.", mshll, 2));
-			if (pid == 0)
-				ft_kindergarden(mshll, cmd, pipe_fd, fd_in);
-			else
-			{
-				close(pipe_fd[1]);
-				mshll->val_error = ft_wait();
-			}
+			msj_error("pipe error\n", mshll, 1);
+		pid = fork();
+		if (pid == -1)
+			return (msj_error("Error ar fork() function.", mshll, 2));
+		if (pid == 0)
+			ft_kindergarden(mshll, cmd, pipe_fd, fd_in);
+		else
+		{
+			close(pipe_fd[1]);
+			mshll->val_error = ft_wait();
+		}
 	}
 }
 
