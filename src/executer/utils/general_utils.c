@@ -42,7 +42,7 @@ int ft_wait(void)
 
 void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg, int exit_b)
 {
-	ft_free_minishell(mshll, 1);
+	ft_free_minishell(mshll, exit_b);
 	if (exit_value)
 		msj_error(error_msg, mshll, exit_value);
 	if (exit_b)
