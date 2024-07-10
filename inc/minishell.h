@@ -19,7 +19,7 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-# define ERROR_FD	"No such file or directory."
+# define ERROR_FD	"No such file or directoryy."
 # define ERROR_EOF 	"syntax error: unexpected end of file\n"
 # define ERROR_UPIPE	"syntax error near unexpected token '|'\n"
 # define ERROR_UT	"syntax error near unexpected token\n"
