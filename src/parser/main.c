@@ -17,9 +17,12 @@ int	main(int argc, char **argv, char **env)
 		minishell->tokens = NULL;
 		minishell->cmds = NULL;
 		init_signal();
-		minishell->line = readline("minishell$ ");
-		init_minishell(minishell);
-		if (!minishell->line)
-			control_d(minishell);
+		if (minishell->flag != 1)
+		{
+			minishell->line = readline("minishell$ ");
+			init_minishell(minishell);
+			if (!minishell->line)
+				control_d(minishell);
+		}
 	}
 }

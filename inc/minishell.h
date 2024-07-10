@@ -105,6 +105,7 @@ extern int					g_value;
 void	init_signal(void);
 void	control_c(int signal);
 void	control_d(t_minishell *minishell);
+void	control_backslash(int signal);
 void	init_ev_exp(t_minishell *minishell, char **env);
 void	init_minishell(t_minishell *minishell);
 //------------------variable expand--------------------------

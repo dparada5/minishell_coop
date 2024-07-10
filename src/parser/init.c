@@ -6,7 +6,9 @@ int	g_value;
 
 void	init_ev_exp(t_minishell *minishell, char **env)
 {
-	if (env != NULL)
+	if (env[0] == NULL)
+		msj_error("Error: no environment found\n", minishell, 2);
+	if (env[0] != NULL)
 	{
 		minishell->env = save_env(env, -1, minishell);
 		minishell->exp = save_env(env, -1, minishell);
@@ -44,13 +46,12 @@ void	init_minishell(t_minishell *minishell)
 		check_line(minishell);
 		if (minishell->flag != 1)
 		{
-			g_value = 2;
-			
+			signal(SIGQUIT, control_backslash);
 			ft_executor(minishell);
-			// minishell->val_error = 0;
 		}
 		ft_free_minishell(minishell, 0);
 		g_value = 1;
+		signal(SIGQUIT, SIG_IGN);
 		minishell->line = readline("minishell$ ");
 	}
 	rl_clear_history();
