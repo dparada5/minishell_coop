@@ -25,7 +25,7 @@ void	check_line(t_minishell *minishell)
 {
 	states(minishell->line, minishell);
 	minishell->tokens = get_tokens(minishell->line, minishell);
-	// printf_tokens(minishell->tokens);
+	//printf_tokens(minishell->tokens);
 	check_expansion(minishell->tokens, minishell);
 	token_actions(minishell);
 	// printf_cmds(minishell->cmds);
