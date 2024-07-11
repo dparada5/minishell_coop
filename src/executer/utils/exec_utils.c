@@ -72,3 +72,9 @@ int	ft_cd_norm(t_minishell *mshll, char *absol_path)
 	free(absol_path);
 	return (1);
 }
+
+void	ft_update_pwds(t_env *env, char *n_oldpwd, char *n_pwd)
+{
+	ft_change_envvar(env, "OLDPWD", n_oldpwd);
+	ft_change_envvar(env, "PWD", n_pwd);
+}
