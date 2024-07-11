@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 14:11:14 by dparada           #+#    #+#             */
+/*   Updated: 2024/07/11 14:36:44 by dparada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../../inc/minishell.h"
 
 int	ft_built(t_minishell *ms, t_cmds *cmd, char **cmd_f)
@@ -5,8 +17,10 @@ int	ft_built(t_minishell *ms, t_cmds *cmd, char **cmd_f)
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(cmd_f[0], "cd", 3) == 0)
+	if (ft_strncmp(cmd_f[0], "cd", 3) == 0 && !cmd->cmds_flags[2])
 		ft_cd(ms, ms->env, 0);
+	else if (ft_strncmp(cmd_f[0], "cd", 3) == 0 && cmd->cmds_flags[2])
+		msj_error("cd: too many arguments\n", ms, 1);
 	else if (ft_strncmp(cmd_f[0], "echo", 5) == 0)
 		ft_echo(ms->cmds);
 	else if (ft_strncmp(cmd_f[0], "env", 4) == 0)
@@ -78,6 +92,7 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 		else
 		{
 			close(pipe_fd[1]);
+			close(pipe_fd[0]);
 			mshll->val_error = ft_wait();
 		}
 	}
@@ -105,7 +120,9 @@ void	ft_bedroom(t_minishell *mshll, int pipes_left, int in_fd)
 			mshll->val_error = ft_wait();
 		}
 		runner = runner->next;
-		in_fd = pipe_fd[0];
+		close(in_fd);
+		in_fd = dup(pipe_fd[0]);
+		close(pipe_fd[0]);
 	}
 }
 
