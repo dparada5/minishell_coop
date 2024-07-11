@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:10:54 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 14:10:55 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/11 17:21:26 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	ft_check_first_digit(char *str, t_minishell *mshll)
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		mshll->val_error = 1;
 		mshll->flag = 1;
+		free (key);
 		return (1);
 	}
 	free (key);

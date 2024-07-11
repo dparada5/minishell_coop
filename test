@@ -1,10 +1,12 @@
 # Test for minishell
 
+# Para leaks
+    - valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+
 # Echo
     - echo
     - echo hola
     - echo ""
-    - echo "" hola
     - echo -n hola
     - echo -n -n hola
     - echo -n -nh -n hola
