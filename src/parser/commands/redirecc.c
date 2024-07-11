@@ -22,13 +22,13 @@ t_token	*open_append(t_token *token, t_cmds *cmds, t_minishell *minishell)
 			;
 		else if (access(token->content, R_OK | W_OK) == -1 && errno == EACCES)
 		{
-			// ft_putstr_fd("minishell: ", 2);
 			msj_error_fd(1, token->content, cmds, minishell);
 			cmds->fd_out = -1;
 		}
 		if (cmds->fd_out != -1)
 		{
-			cmds->fd_out = open(token->content, O_RDWR | O_CREAT | O_APPEND, 0644);
+			cmds->fd_out = open(token->content, \
+			O_RDWR | O_CREAT | O_APPEND, 0644);
 			if (cmds->fd_out < 0)
 				msj_error_fd(2, ERROR_FD, cmds, minishell);
 			cmds->executor = 1;
@@ -53,7 +53,8 @@ t_token	*open_trunc(t_token *token, t_cmds *cmds, t_minishell *minishell)
 		}
 		if (cmds->fd_out != -1)
 		{
-			cmds->fd_out = open(token->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			cmds->fd_out = open(token->content, \
+			O_RDWR | O_CREAT | O_TRUNC, 0644);
 			if (cmds->fd_out < 0)
 				msj_error_fd(1, ERROR_FD, cmds, minishell);
 			cmds->executor = 1;
@@ -71,7 +72,6 @@ t_token	*open_infile(t_token *token, t_cmds *cmds, t_minishell *minishell)
 			close(cmds->fd_in);
 		if (access(token->content, R_OK | W_OK) == -1 && errno == EACCES)
 		{
-			// ft_putstr_fd("minishell: ", 2);
 			msj_error_fd(1, token->content, cmds, minishell);
 			cmds->fd_out = -1;
 		}
