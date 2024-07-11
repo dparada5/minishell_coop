@@ -1,4 +1,3 @@
-
 #include "./../../../inc/minishell.h"
 
 void	ft_pwd(void)

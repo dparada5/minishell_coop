@@ -1,4 +1,3 @@
-
 #include "./../../../inc/minishell.h"
 
 int	ft_pipes_count(t_minishell *mshll)
