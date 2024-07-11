@@ -1,4 +1,3 @@
-
 #include "./../../../inc/minishell.h"
 
 t_env	*ft_get_envvar(t_env *env, char *var_name)
@@ -21,7 +20,7 @@ int	ft_change_envvar(t_env *env, char *var_name, char *new_value)
 
 	aux = ft_get_envvar(env, var_name);
 	if (!aux)
-		return (0);//PORHACER otra vez lo de la mierda de control de errores
+		return (0);
 	free (aux->content);
 	aux->content = ft_strdup(new_value);
 	return (1);
