@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 14:09:43 by dparada           #+#    #+#             */
+/*   Updated: 2024/07/11 14:09:45 by dparada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -5,8 +16,8 @@
 # include "./../lib/LIBFT/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <signal.h>
 # include <errno.h>
 
@@ -27,7 +38,6 @@
 # define ERROR_DQ	"unexpected EOF while looking for matching quote '\"'\n"
 # define MALLOC_FAILED "malloc failed.\n"
 # define CONTROL_D_HD	""
-
 
 typedef enum e_state_num
 {
@@ -182,9 +192,10 @@ void	ft_free_mat(char **mat);
 //----------------------------------BUILTINS---------------------------------//
 int		ft_cd(t_minishell *minishell, t_env *env, int error_check);
 void	ft_echo(t_cmds *cmd);
-void	ft_env(t_env *env);
+void	ft_env(t_env *env, t_minishell *mshll, char *flag);
 void	ft_exit(int error_code, t_minishell *minishell, t_cmds *cmd);
-void	ft_export_print(t_env **exp, t_env *prev_node, t_env *swap_aux, t_env *run);
+void	ft_export_print(t_env **exp, t_env *prev_node, \
+t_env *swap_aux, t_env *run);
 void	ft_export_insert(t_minishell *mshll, char *str, t_env *aux, int i);
 void	ft_pwd(void);
 void	ft_unset(t_minishell *mshll, char *key_to_delete);
@@ -192,8 +203,10 @@ void	ft_unset(t_minishell *mshll, char *key_to_delete);
 int		ft_is_num(char *str);
 int		ft_wait(void);
 int		ft_export_chars(char *str, t_minishell *mshll);
-void	ft_free_and_exit(t_minishell *mshll, int exit_value, char *error_msg, int exit_b);
+void	ft_free_and_exit(t_minishell *mshll, int exit_value, \
+char *error_msg, int exit_b);
 int		ft_cd_norm(t_minishell *mshll, char *absol_path);
 void	ft_check_invalid_export(t_minishell *mshll, t_cmds *cmd, int insert);
+void	ft_update_pwds(t_env *env, char *n_oldpwd, char *n_pwd);
 
 #endif

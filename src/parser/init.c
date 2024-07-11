@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 14:17:21 by dparada           #+#    #+#             */
+/*   Updated: 2024/07/11 14:17:31 by dparada          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "./../../inc/minishell.h"
-//912
 
 int	g_value;
 
@@ -25,10 +35,8 @@ void	check_line(t_minishell *minishell)
 {
 	states(minishell->line, minishell);
 	minishell->tokens = get_tokens(minishell->line, minishell);
-	//printf_tokens(minishell->tokens);
 	check_expansion(minishell->tokens, minishell);
 	token_actions(minishell);
-	// printf_cmds(minishell->cmds);
 }
 
 void	init_minishell(t_minishell *minishell)
