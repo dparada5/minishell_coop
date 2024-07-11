@@ -86,6 +86,7 @@ int	ft_check_first_digit(char *str, t_minishell *mshll)
 		mshll->flag = 1;
 		return (1);
 	}
+	free (key);
 	return (0);
 }
 
