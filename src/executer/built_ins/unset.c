@@ -1,4 +1,3 @@
-
 #include "./../../../inc/minishell.h"
 
 void	ft_check_and_delete(t_env **envxp, char *key)
@@ -26,7 +25,6 @@ void	ft_check_and_delete(t_env **envxp, char *key)
 		runner = runner->next;
 		index++;
 	}
-
 }
 
 void	ft_unset(t_minishell *mshll, char *key_to_delete)

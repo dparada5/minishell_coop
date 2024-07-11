@@ -1,9 +1,8 @@
-
 #include "./../../../inc/minishell.h"
 
 char	*ft_get_exec_path(t_minishell *mshll, char *cmd)
 {
-	int	i;
+	int		i;
 	t_env	*path_var;
 	char	**path_splitted;
 	char	*exec_line;
@@ -32,7 +31,7 @@ char	*ft_get_exec_path(t_minishell *mshll, char *cmd)
 
 void	ft_set_cmds_index(t_minishell *mshll)
 {
-	int	i;
+	int		i;
 	t_cmds	*cmd_runner;
 
 	i = 0;
@@ -47,7 +46,7 @@ void	ft_set_cmds_index(t_minishell *mshll)
 void	ft_check_invalid_export(t_minishell *mshll, t_cmds *cmd, int insert)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!insert)
 	{

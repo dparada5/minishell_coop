@@ -1,9 +1,8 @@
-
 #include "./../../../inc/minishell.h"
 
 void	ft_print_exp(t_env *exp)
 {
-	t_env *runner;
+	t_env	*runner;
 
 	runner = exp;
 	while (runner)
@@ -13,7 +12,7 @@ void	ft_print_exp(t_env *exp)
 		{
 			ft_printf("=\"");
 			if (runner->content)
-				ft_printf("%s",runner->content);
+				ft_printf("%s", runner->content);
 			ft_printf("\"");
 		}
 		ft_printf("\n");
@@ -21,29 +20,29 @@ void	ft_print_exp(t_env *exp)
 	}
 }
 
-void	ft_export_print(t_env **exp, t_env *prev_node, t_env *swap_aux, t_env *run)
+void	ft_export_print(t_env **exp, t_env *p_node, t_env *swap_aux, t_env *r)
 {
-	run = *exp;
-	while (run)
+	r = *exp;
+	while (r)
 	{
-		if (run->next && ft_strncmp(run->key, run->next->key, ft_strlen(run->key)) > 0)
+		if (r->next && ft_strncmp(r->key, r->next->key, ft_strlen(r->key)) > 0)
 		{
-			if (!prev_node)
+			if (!p_node)
 			{
-				swap_aux = run->next->next;
-				*exp = run->next;
-				run->next->next = run;
-				run->next = swap_aux;
+				swap_aux = r->next->next;
+				*exp = r->next;
+				r->next->next = r;
+				r->next = swap_aux;
 			}
 			else
-				ft_swap_envnodes(prev_node, run, run->next, run->next->next);
-			prev_node = NULL;
-			run = *exp;
+				ft_swap_envnodes(p_node, r, r->next, r->next->next);
+			p_node = NULL;
+			r = *exp;
 		}
 		else
 		{
-			prev_node = run;	
-			run = run->next;
+			p_node = r;
+			r = r->next;
 		}
 	}
 	ft_print_exp(*exp);

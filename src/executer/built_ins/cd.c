@@ -1,4 +1,3 @@
-
 #include "./../../../inc/minishell.h"
 
 int	ft_cd_dir(char	*pre_path, char *end_path, t_env *env, t_minishell *mshll)
@@ -28,26 +27,26 @@ int	ft_cd_dir(char	*pre_path, char *end_path, t_env *env, t_minishell *mshll)
 	return (free(absolute_path), return_value);
 }
 
-int	ft_pwds_chdir(t_env *env, char *new_pwd, char *new_oldpwd, t_minishell *mshll)
+int	ft_pwds_chdir(t_env *env, char *n_pwd, char *n_opwd, t_minishell *ms)
 {
 	int		error_check;
 
-	error_check = chdir(new_pwd);
+	error_check = chdir(n_pwd);
 	if (error_check == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(new_pwd, 2);
-		msj_error(" ", mshll, 1);
+		ft_putstr_fd(n_pwd, 2);
+		msj_error(" ", ms, 1);
 	}
 	else
 	{
-		ft_change_envvar(env, "OLDPWD", new_oldpwd);
-		ft_change_envvar(env, "PWD", new_pwd);
+		ft_change_envvar(env, "OLDPWD", n_opwd);
+		ft_change_envvar(env, "PWD", n_pwd);
 	}
 	return (error_check);
 }
 
-int	ft_cd(t_minishell *mshll, t_env *env, int error_check)
+int	ft_cd(t_minishell *ms, t_env *env, int error_)
 {
 	t_env	*pwd;
 	t_env	*oldpwd;
@@ -57,19 +56,21 @@ int	ft_cd(t_minishell *mshll, t_env *env, int error_check)
 
 	pwd = ft_get_envvar(env, "PWD");
 	oldpwd = ft_get_envvar(env, "OLDPWD");
-	new_dir = mshll->cmds->cmds_flags[1];
+	new_dir = ms->cmds->cmds_flags[1];
 	if (!new_dir)
-		error_check = ft_pwds_chdir(env, ft_get_envvar(env, "HOME")->content, pwd->content, mshll);
+		new_dir = ft_get_envvar(env, "HOME")->content;
+	if (!new_dir)
+		error_ = ft_pwds_chdir(env, new_dir, pwd->content, ms);
 	else if (!ft_strncmp("-", new_dir, ft_strlen(new_dir)))
 	{
 		aux_pwd = ft_strdup(oldpwd->content);
-		error_check = ft_pwds_chdir(env, aux_pwd, pwd->content, mshll);
+		error_ = ft_pwds_chdir(env, aux_pwd, pwd->content, ms);
 		free (aux_pwd);
 	}
 	else
 	{
 		aux_join = ft_strdup(pwd->content);
-		error_check = ft_cd_dir(ft_strjoin(aux_join, "/"), new_dir, env, mshll);
+		error_ = ft_cd_dir(ft_strjoin(aux_join, "/"), new_dir, env, ms);
 	}
-	return (error_check);
+	return (error_);
 }
