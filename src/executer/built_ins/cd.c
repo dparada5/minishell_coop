@@ -15,12 +15,13 @@ int	ft_cd_dir(char	*pre_path, char *end_path, t_env *env, t_minishell *mshll)
 	return_value = chdir(aux);
 	free (aux);
 	if (return_value == -1)
-		return_value = chdir(absolute_path);
-	else
 	{
-		ft_change_envvar(env, "OLDPWD", pwd->content);
-		ft_change_envvar(env, "PWD", aux);
+		return_value = chdir(absolute_path);
+		if (return_value != -1)
+			ft_update_pwds(env, pwd->content, absolute_path);
 	}
+	else
+		ft_update_pwds(env, pwd->content, aux);
 	if (return_value == -1)
 		if (ft_cd_norm(mshll, absolute_path))
 			return (return_value);

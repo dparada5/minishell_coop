@@ -1,25 +1,25 @@
 #include "./../../inc/minishell.h"
 
-int	ft_built(t_minishell *ms, t_cmds *cmd, char **cmd_f, int len)
+int	ft_built(t_minishell *ms, t_cmds *cmd, char **cmd_f)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(cmd_f[0], "cd", len) == 0)
+	if (ft_strncmp(cmd_f[0], "cd", 3) == 0)
 		ft_cd(ms, ms->env, 0);
-	else if (ft_strncmp(cmd_f[0], "echo", len) == 0)
+	else if (ft_strncmp(cmd_f[0], "echo", 5) == 0)
 		ft_echo(ms->cmds);
-	else if (ft_strncmp(cmd_f[0], "env", len) == 0)
-		ft_env(ms->env);
-	else if (ft_strncmp(cmd_f[0], "exit", len) == 0)
+	else if (ft_strncmp(cmd_f[0], "env", 4) == 0)
+		ft_env(ms->env, ms, cmd_f[1]);
+	else if (ft_strncmp(cmd_f[0], "exit", 5) == 0)
 		ft_exit(0, ms, cmd);
-	else if (ft_strncmp(cmd_f[0], "export", len) == 0 && !cmd_f[1])
+	else if (ft_strncmp(cmd_f[0], "export", 6) == 0 && !cmd_f[1])
 		ft_check_invalid_export(ms, cmd, 0);
-	else if (ft_strncmp(cmd_f[0], "export", len) == 0 && cmd_f[1])
+	else if (ft_strncmp(cmd_f[0], "export", 7) == 0 && cmd_f[1])
 		ft_check_invalid_export(ms, cmd, 1);
-	else if (ft_strncmp(cmd_f[0], "pwd", len) == 0)
+	else if (ft_strncmp(cmd_f[0], "pwd", 4) == 0)
 		ft_pwd();
-	else if (ft_strncmp(cmd_f[0], "unset", len) == 0)
+	else if (ft_strncmp(cmd_f[0], "unset", 6) == 0)
 		while (cmd_f[++i])
 			ft_unset(ms, cmd_f[i]);
 	else
@@ -32,7 +32,7 @@ void	ft_kindergarden(t_minishell *ms, t_cmds *cmd, int *pipe_fd, int in_fd)
 	char	*exec_path;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		ft_free_and_exit(mshll, 0, NULL, 1);
+		ft_free_and_exit(ms, 0, NULL, 1);
 	if (!cmd->index)
 		close(pipe_fd[0]);
 	if (!cmd->next)
@@ -47,7 +47,7 @@ void	ft_kindergarden(t_minishell *ms, t_cmds *cmd, int *pipe_fd, int in_fd)
 		dup2(cmd->fd_out, 1);
 	else if (cmd->next)
 		dup2(pipe_fd[1], 1);
-	if (ft_built(ms, cmd, cmd->cmds_flags, ft_strlen(cmd->cmds_flags[0])))
+	if (ft_built(ms, cmd, cmd->cmds_flags))
 		ft_free_and_exit(ms, 0, NULL, 1);
 	exec_path = ft_get_exec_path(ms, cmd->cmds);
 	ft_save_env_mat(ms, -1, 0);
@@ -61,12 +61,12 @@ void	ft_single_cmd(t_minishell *mshll, t_cmds *cmd, int fd_in)
 	pid_t	pid;
 
 	if (!ft_strlen(cmd->cmds) && cmd->executor == 1)
-		return(ft_free_and_exit(mshll, 0, NULL, 0));
+		return (ft_free_and_exit(mshll, 0, NULL, 0));
 	if (fd_in != 0)
 		dup2(cmd->fd_in, 0);
 	if (cmd->fd_out != 1)
 		dup2(cmd->fd_out, 1);
-	if (!ft_built(mshll, cmd, cmd->cmds_flags, ft_strlen(cmd->cmds_flags[0])))
+	if (!ft_built(mshll, cmd, cmd->cmds_flags))
 	{
 		if (pipe(pipe_fd) == -1)
 			msj_error("pipe error\n", mshll, 1);
