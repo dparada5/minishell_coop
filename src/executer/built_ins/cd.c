@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:10:16 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/12 13:10:17 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 13:37:59 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_cd(t_minishell *ms, t_env *env, int error_, char *n_dir)
 	pwd = ft_get_envvar(env, "PWD");
 	oldpwd = ft_get_envvar(env, "OLDPWD");
 	if (!n_dir)
-		n_dir = ft_strdup(ft_get_envvar(env, "HOME")->content);
+		n_dir = ft_get_envvar(env, "HOME")->content;
 	if (!ft_strncmp("-", n_dir, ft_strlen(n_dir)))
 	{
 		aux_pwd = ft_strdup(oldpwd->content);

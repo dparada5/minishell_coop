@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:11:14 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/12 10:47:24 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 13:48:32 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_kindergarden(t_minishell *ms, t_cmds *cmd, int *pipe_fd, int in_fd)
 		dup2(pipe_fd[1], 1);
 	if (ft_built(ms, cmd, cmd->cmds_flags))
 		ft_free_and_exit(ms, 0, NULL, 1);
-	exec_path = ft_get_exec_path(ms, cmd->cmds);
+	exec_path = ft_get_exec_path(ms, cmd->cmds, -1, NULL);
 	execve(exec_path, cmd->cmds_flags, 0);
 	ft_free_and_exit(ms, 127, "command not found", 1);
 }

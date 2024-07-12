@@ -6,27 +6,27 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:11:08 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/12 13:08:39 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 13:49:58 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../inc/minishell.h"
 
-char	*ft_get_exec_path(t_minishell *mshll, char *cmd)
+char	*ft_get_exec_path(t_minishell *mshll, char *cmd, int i, char *exec_line)
 {
-	int		i;
 	t_env	*path_var;
 	char	**path_splitted;
-	char	*exec_line;
 	char	*join_aux;
 
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
 	path_var = ft_get_envvar(mshll->env, "PATH");
 	if (!path_var)
+	{
 		msj_error("No path found", mshll, 130);
+		ft_free_minishell(mshll, 1);
+	}
 	path_splitted = ft_split(path_var->content, ':');
-	i = -1;
 	while (path_splitted[++i])
 	{
 		join_aux = ft_strjoin(path_splitted[i], "/");

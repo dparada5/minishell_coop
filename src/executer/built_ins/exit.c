@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:10:36 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 14:10:42 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 13:40:46 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_exit(int error_code, t_minishell *minishell, t_cmds *cmd)
 		if (ft_is_num(cmd->cmds_flags[1]))
 		{
 			error_code = ft_atoi(cmd->cmds_flags[1]);
+			ft_free_minishell(minishell, 1);
 			exit (error_code % 256);
 		}
 		else

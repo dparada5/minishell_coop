@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:09:43 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/12 10:48:25 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 13:48:43 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	ft_swap_envnodes(t_env *prev, t_env *act, t_env *next, t_env *last);
 t_env	*new_env_exp(char *key, char *content);
 
 //---------------------------------EXEC UTILS--------------------------------//
-char	*ft_get_exec_path(t_minishell *mshll, char *cmd);
+char	*ft_get_exec_path(t_minishell *mshll, char *cmd, int i, char *exec_line);
 void	ft_set_cmds_index(t_minishell *mshll);
 
 //--------------------------------TOKENS UTILS-------------------------------//
