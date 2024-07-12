@@ -1,0 +1,10 @@
+Makefile
+inc
+infile
+lib
+minishell
+obj
+outfile
+readline.supp
+src
+test

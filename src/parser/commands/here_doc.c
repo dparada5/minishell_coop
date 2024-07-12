@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:11:39 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 14:11:44 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:32:52 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	here_doc_loop(t_token *token, t_minishell *minishell, int fd)
 
 	signal(SIGINT, ft_sig_here_doc);
 	line = readline("> ");
-	if (!line)
-		exit (0);
 	while (line)
 	{
 		if (ft_strcmp(line, token->content) == 0)
@@ -42,9 +40,13 @@ void	here_doc_loop(t_token *token, t_minishell *minishell, int fd)
 		}
 		check_heredoc_line(line, minishell, fd);
 		line = readline("> ");
-		if (!line)
-			exit (0);
 	}
+	if (!line)
+	{
+		ft_free_minishell(minishell, 1);
+		exit (0);
+	}
+	ft_free_minishell(minishell, 1);
 	exit (1);
 }
 
@@ -52,10 +54,13 @@ void	here_doc_wait(t_token *token, t_cmds *cmds, t_minishell *mini, int fd)
 {
 	int	status;
 
-	waitpid(0, &status, 0);
-	if (WEXITSTATUS(status) == 4)
+	status = ft_wait();
+	// waitpid(0, &status, 0);
+	// if (WEXITSTATUS(status) == 4)
+	// else if (WEXITSTATUS(status) == 0)
+	if (status == 4)
 		mini->flag = 1;
-	else if (WEXITSTATUS(status) == 0)
+	else if (status == 0)
 	{
 		ft_putstr_fd("minishell: warning: ", 1);
 		ft_putstr_fd("here_document delimited by end-of-file (wanted '", 1);

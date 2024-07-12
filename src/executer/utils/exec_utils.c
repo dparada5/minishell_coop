@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:11:08 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 14:11:09 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 13:08:39 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	ft_cd_norm(t_minishell *mshll, char *absol_path)
 	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putstr_fd(absol_path, 2);
 	msj_error(" ", mshll, 1);
-	free(absol_path);
 	return (1);
 }
 

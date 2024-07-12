@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:09:43 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 14:09:45 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:48:25 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ typedef struct s_cmds
 	int				fd_out;
 	int				index;
 	int				error;
-	int				heredoc;
 	int				executor;
-	int				eof;
 	int				empty_flag;
 	struct s_cmds	*next;
 }				t_cmds;
@@ -177,7 +175,6 @@ t_env	*ft_get_envvar(t_env *env, char *var_name);
 int		ft_change_envvar(t_env *env, char *var_name, char *new_value);
 void	ft_swap_envnodes(t_env *prev, t_env *act, t_env *next, t_env *last);
 t_env	*new_env_exp(char *key, char *content);
-void	ft_save_env_mat(t_minishell *mshll, int i, int size);
 
 //---------------------------------EXEC UTILS--------------------------------//
 char	*ft_get_exec_path(t_minishell *mshll, char *cmd);
@@ -190,7 +187,7 @@ int		ft_pipes_count(t_minishell *mshll);
 void	ft_free_mat(char **mat);
 
 //----------------------------------BUILTINS---------------------------------//
-int		ft_cd(t_minishell *minishell, t_env *env, int error_check);
+int		ft_cd(t_minishell *ms, t_env *env, int error_, char *n_dir);
 void	ft_echo(t_cmds *cmd);
 void	ft_env(t_env *env, t_minishell *mshll, char *flag);
 void	ft_exit(int error_code, t_minishell *minishell, t_cmds *cmd);

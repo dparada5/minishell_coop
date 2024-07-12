@@ -3,6 +3,18 @@
 # Para leaks
     - valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
+# Parser
+    - ls |
+    - |
+    - ls > |
+    - ls < |
+    - ls << |
+    - ls >> |
+    - ls > outfile_inexistente
+    - ls > outfile_sin_permisos
+    - ls < infile_sin_permisos
+    - ls > outfile | ls < infile_inexistente | cat
+
 # Echo
     - echo
     - echo hola

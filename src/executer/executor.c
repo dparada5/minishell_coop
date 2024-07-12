@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:11:14 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 16:19:37 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:47:24 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_built(t_minishell *ms, t_cmds *cmd, char **cmd_f)
 
 	i = 0;
 	if (ft_strncmp(cmd_f[0], "cd", 3) == 0 && !cmd->cmds_flags[2])
-		ft_cd(ms, ms->env, 0);
+		ft_cd(ms, ms->env, 0, cmd_f[1]);
 	else if (ft_strncmp(cmd_f[0], "cd", 3) == 0 && cmd->cmds_flags[2])
 		msj_error("cd: too many arguments\n", ms, 1);
 	else if (ft_strncmp(cmd_f[0], "echo", 5) == 0)
@@ -64,7 +64,6 @@ void	ft_kindergarden(t_minishell *ms, t_cmds *cmd, int *pipe_fd, int in_fd)
 	if (ft_built(ms, cmd, cmd->cmds_flags))
 		ft_free_and_exit(ms, 0, NULL, 1);
 	exec_path = ft_get_exec_path(ms, cmd->cmds);
-	// ft_save_env_mat(ms, -1, 0);
 	execve(exec_path, cmd->cmds_flags, 0);
 	ft_free_and_exit(ms, 127, "command not found", 1);
 }

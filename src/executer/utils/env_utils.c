@@ -6,7 +6,7 @@
 /*   By: dparada <dparada@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 14:11:05 by dparada           #+#    #+#             */
-/*   Updated: 2024/07/11 14:11:06 by dparada          ###   ########.fr       */
+/*   Updated: 2024/07/12 12:33:48 by dparada          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,4 @@ t_env	*new_env_exp(char *key, char *content)
 	env->equal = 0;
 	env->next = NULL;
 	return (env);
-}
-
-void	ft_save_env_mat(t_minishell *mshll, int i, int size)
-{
-	t_env	*env_runner;
-	char	*join_aux;
-	char	*aux;
-
-	if (mshll->env_mat)
-		ft_free_mat(mshll->env_mat);
-	mshll->env_mat = NULL;
-	env_runner = mshll->env;
-	while (env_runner)
-	{
-		size ++;
-		env_runner = env_runner->next;
-	}
-	env_runner = mshll->env;
-	mshll->env_mat = ft_calloc(size, sizeof(char *));
-	while (++i < size)
-	{
-		aux = ft_strdup(env_runner->key);
-		join_aux = ft_strjoin(aux, "=");
-		mshll->env_mat[i] = ft_strjoin(join_aux, env_runner->content);
-		env_runner = env_runner->next;
-	}
 }
